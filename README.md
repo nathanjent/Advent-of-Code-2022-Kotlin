@@ -2,7 +2,7 @@
 
 A simple setup to test solutions for the Advent of Code challenge in Kotlin.
 
-I am trying to keep the setup basic to reduce the overhead when running the [Repl](https://github.com/nathanjent/Advent-of-Code-2022---Kotlin).
+I am trying to keep the setup very basic to reduce the overhead when running the [Repl](https://replit.com/@nathanjent/Advent-of-Code-2022-Kotlin).
 
 The following commands are used to compile and run all the tests.
 
