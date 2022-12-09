@@ -10,6 +10,11 @@
       <version>1.9.1</version>
       <type>jar</type>
     </dependency>
+    <dependency>
+        <groupId>org.jetbrains.kotlin</groupId>
+        <artifactId>kotlin-stdlib</artifactId>
+        <version>1.7.22</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
@@ -36,6 +41,14 @@
           </dynamicDependencies>
         </configuration>
       </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+                <source>8</source>
+                <target>8</target>
+            </configuration>
+        </plugin>
     </plugins>
   </build>
 </project>

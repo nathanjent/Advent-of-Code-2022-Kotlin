@@ -44,13 +44,12 @@ class Day05 {
     for (row in rules.first.map { it as Row }) {
       row.locations.forEachIndexed {
         i: Int, location: Location ->
-        val stackIndex = i + 1
-        val stack = stacks.getOrDefault(
-          stackIndex,
-          ArrayDeque(mutableListOf<Location>()),
-        )
+        val stackIndex = i + 1 // Stacks are 1-indexed
+        val stack = stacks.getOrPut(stackIndex ) {
+          ArrayDeque(mutableListOf<Location>())
+        }
         when (location) {
-          is Crate -> stack.addFirst(location)
+          is Crate -> stack.addLast(location)
           is Empty -> {}
           else -> throw Exception("Unknown location type [ $location ]")
         }
@@ -62,16 +61,16 @@ class Day05 {
       for (i in 0..move.count) {
         val location = fromStack?.removeFirstOrNull()
         if (location != null && location is Crate) {
-          throw Exception("What?")
           stacks[move.to]?.addFirst(location)
         }
       }
     }
 
-    if (true) throw Exception("${stacks.get(0)}")
+    //if (true) throw Exception("${stacks.get(0)}")
     return stacks.map { it.value.firstOrNull() }
       .filterNotNull()
-      .joinToString()
+      .map { it.marker }
+      .joinToString("")
   }
 
   fun part2(input: Iterable<String>): String {
