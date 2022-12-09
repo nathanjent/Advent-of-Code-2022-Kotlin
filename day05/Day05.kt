@@ -58,7 +58,7 @@ class Day05 {
 
     for (move in rules.second.map { it as Move }) {
       val fromStack = stacks[move.from]
-      for (i in 0..move.count) {
+      for (i in 1..move.count) {
         val location = fromStack?.removeFirstOrNull()
         if (location != null && location is Crate) {
           stacks[move.to]?.addFirst(location)
@@ -66,7 +66,6 @@ class Day05 {
       }
     }
 
-    //if (true) throw Exception("${stacks.get(0)}")
     return stacks.map { it.value.firstOrNull() }
       .filterNotNull()
       .map { it.marker }

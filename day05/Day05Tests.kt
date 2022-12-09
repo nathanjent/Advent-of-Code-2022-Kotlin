@@ -28,14 +28,14 @@ move 1 from 1 to 2
   @Test
   fun part1Test() {
     val input = File(inputFile).readLines()
-    val expected = "42"
+    val expected = "PTWLTDSJV"
 
     assertEquals(expected, day.part1(input))
   }
   
   @Test
   fun example2Test() {
-    val expected = "42"
+    val expected = "MCD"
 
     assertEquals(expected, day.part2(exampleInput))
   }
