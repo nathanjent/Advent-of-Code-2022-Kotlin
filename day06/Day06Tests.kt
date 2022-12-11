@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.io.File
 import java.util.stream.Stream
 
-public class Day06Tests {
+class Day06Tests {
   private val inputFile = "day06/input.txt"
   private val day = Day06()
 

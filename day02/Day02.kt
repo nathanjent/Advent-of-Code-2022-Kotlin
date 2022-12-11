@@ -13,7 +13,8 @@ class Day02 {
   
   fun part1(input: Iterable<String>): Int {
     return input
-      .filter { !it.isBlank() }
+      .asSequence()
+      .filter { it.isNotBlank() }
       .map { it.split(" ") }
       .map { getRoundPart1(getShape(it[0]), getShape(it[1])) }
       .map { it.first.score + it.second.score }
@@ -22,7 +23,8 @@ class Day02 {
 
   fun part2(input: Iterable<String>): Int {
     return input
-      .filter { !it.isBlank() }
+      .asSequence()
+      .filter { it.isNotBlank() }
       .map { it.split(" ") }
       .map { getRoundPart2(getShape(it[0]), getResult(it[1])) }
       .map { it.first.score + it.second.score }

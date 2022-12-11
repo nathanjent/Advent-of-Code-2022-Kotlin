@@ -2,7 +2,7 @@ import org.junit.Test
 import org.junit.Assert.*
 import java.io.File
 
-public class Day04Tests {
+class Day04Tests {
   private val inputFile = "day04/input.txt"
   private val day = Day04()
 
