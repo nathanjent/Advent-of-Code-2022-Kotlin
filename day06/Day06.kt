@@ -1,21 +1,22 @@
 class Day06 {
 
   fun part1(input: String): Int {
-    val windowSize = 4
-    var cursor = 0
-    var markerFound = false
+    return findStartOfPacket(input, 4)
+  }
 
-    while (cursor + windowSize < input.length) {
-      val window = input.subSequence(cursor, cursor + windowSize)
+  fun part2(input: String): Int {
+    return findStartOfPacket(input, 14)
+  }
+
+  private fun findStartOfPacket(input: String, packetMarkerLength: Int): Int {
+    var cursor = 0
+    while (cursor + packetMarkerLength < input.length) {
+      val window = input.subSequence(cursor, cursor + packetMarkerLength)
       if (isMarker(window)) break
       cursor++
     }
 
-    return cursor + windowSize
-  }
-
-  fun part2(input: String): Int {
-    return 0
+    return cursor + packetMarkerLength
   }
 
   private fun isMarker(markerStr: CharSequence): Boolean {
