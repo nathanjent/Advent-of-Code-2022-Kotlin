@@ -36,8 +36,9 @@ $ ls
 8033020 d.log
 5626152 d.ext
 7214296 k
-  """.split("\n")
+""".split("\n")
 
+  @Test
   fun example1Test() {
     val expected = 95437
     assertEquals(expected, day.part1(exampleInput))
@@ -50,7 +51,8 @@ $ ls
 
     assertEquals(expected, day.part1(input))
   }
-  
+
+  @Test
   fun example2Test() {
     val expected = 42
     assertEquals(expected, day.part2(exampleInput))

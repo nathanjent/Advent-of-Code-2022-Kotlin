@@ -3,29 +3,37 @@ class Day07 {
   data class File(val name: String, val size: Int)
 
   class FileSystem {
-    private val fileSystemStructure = mutableMapOf(Pair("/", mutableMapOf<String, Int>()))
     private var pwd: String = "/"
+    private val fileSystemStructure = mutableMapOf(
+      Pair(pwd, mutableMapOf<String, Int>()),
+    )
 
     fun cd(path: String) {
       if (path == "..") {
         pwd = pwd.substring(0, pwd.lastIndexOf("/"))
+      } else if (path != pwd) {
+        pwd += "${if (pwd != "/") "/" else ""}${path}"
       }
-
-      pwd += path
     }
 
     fun ls(): List<File> {
-      return fileSystemStructure.getOrDefault(pwd, mutableMapOf<String, Int>()).map { File(it.key, it.value) }
+      return fileSystemStructure.getOrDefault(pwd, mutableMapOf()).map { File(it.key, it.value) }
     }
 
     fun add(path: String, size: Int = 0) {
-      val dirContents = fileSystemStructure.getOrPut(pwd) { mutableMapOf<String, Int>() }
+      val dirContents = fileSystemStructure.getOrPut(pwd) { mutableMapOf() }
       dirContents[path] = size
     }
 
-    fun df(path: String): Int {
-      val dirContents = fileSystemStructure.get(path)
-      return dirContents?.values?.sum() ?: 0
+    fun du(fullPath: String): Int {
+      val dirContents = fileSystemStructure[fullPath]
+      return dirContents?.map {
+        if (it.value == 0) {
+          du(it.key)
+        } else {
+          it.value
+        }
+      }?.sum() ?: 0
     }
   }
 
@@ -35,33 +43,36 @@ class Day07 {
     var cursor = 0
 
     main@ while (cursor < lines.size) {
-      var line = lines[cursor]
-      if (line.startsWith("$")) {
-        if (line.startsWith("$ cd")) {
-          val path = line.split(" ")[line.length - 1]
-          fileSystem.cd(path)
+      var line = lines[cursor++]
+      if (line.isBlank()) continue
+      val args = line.split(" ")
+
+      if (args[0] == "$") {
+        if (args[1] == "cd") {
+          fileSystem.cd(args[2])
         }
 
-        if (line == "$ ls") {
-          cursor++
+        if (args[1] == "ls") {
           ls@ while (cursor < lines.size) {
             line = lines[cursor++]
-            if (line.startsWith("dir")) {
-              val path = line.split(" ")[1]
-              fileSystem.add(path)
-            } else if (line.startsWith("$")) {
+            if (line.isBlank()) continue@ls
+            val words = line.split(" ")
+
+            if (words[0] == "dir") {
+              fileSystem.add(words[1])
+            } else if (words[0] == "$") {
+              cursor--
               continue@main
             } else {
-              val words = line.split(" ")
               val size = words[0].toInt()
               fileSystem.add(words[1], size)
             }
           }
         }
       }
-
-      cursor++
     }
+
+    val f = fileSystem.ls()
 
     return 0
   }
